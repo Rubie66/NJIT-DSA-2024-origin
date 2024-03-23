@@ -24,7 +24,8 @@ public class StackImplementation<E> implements StackInterface<E> {
     */
    public StackImplementation() throws StackAllocationException {
       // TODO: call the constructor with size parameter with default size of 10.
-      
+      capacity = DEFAULT_STACK_SIZE;
+      itemArray = new Object[capacity];
    }
 
    /** TODO: Implement so that
@@ -35,49 +36,75 @@ public class StackImplementation<E> implements StackInterface<E> {
     * @throws StackAllocationException If cannot allocate room for the internal array.
     */
    public StackImplementation(int capacity) throws StackAllocationException {
-      
+      if (capacity < 2) {
+         throw new StackAllocationException("Size is less than 2.");
+      }
+      this.capacity= capacity;
+      itemArray = new Object[capacity]; 
    }
 
    @Override
    public int capacity() {
       // TODO: Implement this
-      
+      return capacity;
    }
 
    @Override
    public void push(E element) throws StackAllocationException, NullPointerException {
       // TODO: Implement this
-               
+      if(element == null) {
+         throw new NullPointerException("It is null.");
+      }
+      if(currentIndex + 1 >=capacity){
+         int i = capacity + 1000;
+         Object [] Array = new Object[i];
+         for(int j=0;j<capacity; j++){
+            Array[j] = itemArray[j];
+         }
+         itemArray = Array;
+         capacity = i;
+      }
+      this.currentIndex++;
+      this.itemArray[this.currentIndex]=element;         
    }
 
    @SuppressWarnings("unchecked")
    @Override
    public E pop() throws StackIsEmptyException {
-      
+      if (isEmpty()) {
+         throw new StackIsEmptyException("It is null.");
+      }
+      E i =(E) itemArray[currentIndex];
+      itemArray[currentIndex] = null;
+      currentIndex = currentIndex - 1;
+      return i;
    }
 
    @SuppressWarnings("unchecked")
    @Override
    public E peek() throws StackIsEmptyException {
-      
+      if (isEmpty()) {
+         throw new StackIsEmptyException("It is null.");
+      }
+      return (E)itemArray[currentIndex];
    }
 
    @Override
    public int size() {
       // TODO: Implement this
-      
+      return currentIndex + 1;
    }
 
    @Override
    public void clear() {
       // TODO: Implement this
-      
+      currentIndex = -1;
    }
 
    @Override
    public boolean isEmpty() {
       // TODO: Implement this
-      
+      return currentIndex == -1;
    }
 
    @Override
