@@ -11,13 +11,13 @@ public class KeyValueBSearchTree<K extends Comparable<K>, V> implements Dictiona
 
     @Override
     public Type getType() {
-        return Type.NONE;
+        return Type.BST;
     }
 
     @Override
     public int size() {
         // TODO: Implement this
-        return 0;
+        return count;
     }
 
     /**
@@ -55,13 +55,70 @@ public class KeyValueBSearchTree<K extends Comparable<K>, V> implements Dictiona
             // update the root node. But it may have children
             // so do not just replace it with this new node but set
             // the keys and values for the already existing root.
+        if (key == null || value == null){
+            throw new IllegalArgumentException("It cannot be null!");
+        }
+        TreeNode<K, V> newNode = new TreeNode<>(key, value);
+        if (root == null) {
+            count = count + 1;
+            root = newNode;
+            return true;
+        } 
+        else if (Node(root, newNode)) {
+                count++;
+                return true;
+        } 
+        else {
+                return false;
             
-        return false;
+        }
     }
+    private boolean Node(TreeNode<K, V> Node, TreeNode<K, V> newNode) {
+        int i = newNode.keyValue.getKey().compareTo(Node.keyValue.getKey());
+        if (i < 0) {
+            if (Node.left == null) {
+                Node.left = newNode;
+                return true;
+            } 
+            else {
+                return Node(Node.left, newNode);
+            }
+        } 
+        else if (i > 0) {
+            if (Node.right == null) {
+                Node.right = newNode;
+                return true;
+            } 
+            else {
+                return Node(Node.right, newNode);
+            }
+        } 
+        else {
+            Node.keyValue.setValue(newNode.keyValue.getValue());
+            return false;
+        }
+    }
+
 
     @Override
     public V find(K key) throws IllegalArgumentException {
         // TODO: Implement this. //Think about this
+        if (key == null){
+            throw new IllegalArgumentException("It cannot be null!");
+        }
+        TreeNode<K, V> currentNode = root;
+        while (currentNode != null) {
+            int i = key.compareTo(currentNode.keyValue.getKey());
+            if (i > 0) { 
+                currentNode = currentNode.right;
+            } 
+            else if (i < 0) {
+                currentNode = currentNode.left;
+            } 
+            else {
+                return currentNode.keyValue.getValue();
+            }
+        }
         return (null);
     }
 
