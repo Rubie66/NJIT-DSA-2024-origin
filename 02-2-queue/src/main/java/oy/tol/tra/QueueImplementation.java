@@ -9,7 +9,7 @@ public class QueueImplementation<E> implements QueueInterface<E> {
             this.capacity = capacity;
             itemArray = new Object[capacity];
             top = 0;
-            bottom = 0;
+            bottom = -1;
             size = 0;
         }
    /**
@@ -27,21 +27,21 @@ public class QueueImplementation<E> implements QueueInterface<E> {
     */
     public void enqueue(E element) throws QueueAllocationException, NullPointerException {  
         if (element == null) {  
-            throw new NullPointerException("Element cannot be null.");  
+            throw new NullPointerException("It is null.");  
         }  
         if (size + 1 >=capacity) {  
-            int newCapacity = capacity * 2;   
-            Object[] newItemArray = new Object[newCapacity];   
+            int newcapacity = capacity + 100;   
+            Object[] newitemArray = new Object[newcapacity];   
             for (int i = 0; i < size; i++) {  
-                newItemArray[i] = itemArray[top + i];  
+                newitemArray[i] = itemArray[top + i];  
             }  
-            itemArray = newItemArray;  
-            capacity = newCapacity;  
+            itemArray = newitemArray;  
+            capacity = newcapacity;  
             top = 0;  
             bottom = size;  
-        }  
+        }
+        bottom = (bottom + 1) % capacity;  
         itemArray[bottom] = element;  
-        bottom = bottom + 1;  
         size = size + 1;  
     }    
        /**
@@ -86,7 +86,7 @@ public class QueueImplementation<E> implements QueueInterface<E> {
         * @return True if the queue is empty, false otherwise.
         */
        public boolean isEmpty(){
-            return size==0;
+            return size == 0;
        }
     
        
@@ -96,7 +96,7 @@ public class QueueImplementation<E> implements QueueInterface<E> {
        public void clear() {
             itemArray = new Object[capacity];
             top = 0;
-            bottom = 0;
+            bottom = -1;
             size = 0;
        }
        public String toString() {  
