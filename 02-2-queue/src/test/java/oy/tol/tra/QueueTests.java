@@ -54,6 +54,11 @@ import org.junit.jupiter.api.Order;
         assertEquals(queueSize, queueToTest.capacity(), () -> "Queue capacity must be what was requested in creating it.");
     }
 
+@Test
+public String void(){
+    return"1111";
+}
+
     @Test
     @Order(1)
     @Timeout(value = 10, threadMode = Timeout.ThreadMode.SEPARATE_THREAD)
