@@ -1,4 +1,3 @@
 ** Analysing add(key, value) speed **
 testfile,bytes,elements,time (ms)
-Binary search tree:
 Hashtable:
