@@ -38,7 +38,7 @@ public class BooksAndWordsGUI implements Book {
 
    private void run() {
       bookImplementation = BookFactory.createBook();
-      assert(bookImplementation != null);
+      assert (bookImplementation != null);
       mainFrame = new JFrame("Books And Words");
       mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
       eventListener = new ResizeListener();
@@ -50,15 +50,17 @@ public class BooksAndWordsGUI implements Book {
       controlPanel = new ControlPanel(this);
       controlPanel.setBackground(Color.GRAY);
       resultsPanel = new ResultsPanel(this);
-      //resultsPanel.setPreferredSize(new Dimension(1600,2000-controlPanel.getHeight()));
-      JScrollPane scrollFrame = new JScrollPane(resultsPanel, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+      // resultsPanel.setPreferredSize(new
+      // Dimension(1600,2000-controlPanel.getHeight()));
+      JScrollPane scrollFrame = new JScrollPane(resultsPanel, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+            ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
       resultsPanel.setAutoscrolls(true);
       scrollFrame.getVerticalScrollBar().setUnitIncrement(100);
 
       rootPanel.setTopComponent(controlPanel);
-      rootPanel.setBottomComponent(scrollFrame); //  resultsPanel
+      rootPanel.setBottomComponent(scrollFrame); // resultsPanel
       controlPanel.setLayout(new GridLayout());
-      //mainFrame.setPreferredSize(new Dimension(1600, 1200));
+      // mainFrame.setPreferredSize(new Dimension(1600, 1200));
       mainFrame.addComponentListener(eventListener);
       mainFrame.setExtendedState(mainFrame.getExtendedState() | JFrame.MAXIMIZED_BOTH);
       mainFrame.pack();
@@ -67,27 +69,29 @@ public class BooksAndWordsGUI implements Book {
 
    void start() {
       try {
-         bookImplementation.setSource(currentBookFile, currentIgnoreFile);   
+         bookImplementation.setSource(currentBookFile, currentIgnoreFile);
          countUniqueWords();
          report();
-         // close(); 
+         // close();
          // TODO: Close button? close when new book selected? Since
          // data is needed for drawing the bar charts.
+
       } catch (Exception e) {
-         JOptionPane.showMessageDialog(mainFrame, "Exception happened because: " + e.getMessage(), "Something went wrong",
-                                       JOptionPane.ERROR_MESSAGE);
-            e.printStackTrace();
+         JOptionPane.showMessageDialog(mainFrame, "Exception happened because: " + e.getMessage(),
+               "Something went wrong",
+               JOptionPane.ERROR_MESSAGE);
+         e.printStackTrace();
       }
    }
 
    @Override
    public void setSource(String fileName, String ignoreWordsFile) throws FileNotFoundException {
-      bookImplementation.setSource(fileName, ignoreWordsFile);   
+      bookImplementation.setSource(fileName, ignoreWordsFile);
    }
 
    @Override
    public void countUniqueWords() throws IOException, OutOfMemoryError {
-      bookImplementation.countUniqueWords();         
+      bookImplementation.countUniqueWords();
    }
 
    @Override
@@ -102,7 +106,7 @@ public class BooksAndWordsGUI implements Book {
 
    @Override
    public void close() {
-      bookImplementation.close();      
+      bookImplementation.close();
    }
 
    @Override
@@ -124,7 +128,7 @@ public class BooksAndWordsGUI implements Book {
    public int getWordCountInListAt(int position) {
       return bookImplementation.getWordCountInListAt(position);
    }
-   
+
    public String getCurrentBookFile() {
       return currentBookFile;
    }
@@ -140,15 +144,16 @@ public class BooksAndWordsGUI implements Book {
    public void setCurrentIgnoreFile(String currentIgnoreFile) {
       this.currentIgnoreFile = currentIgnoreFile;
    }
-   
+
    private class ResizeListener implements ComponentListener {
 
       @Override
       public void componentResized(ComponentEvent e) {
-         //resultsPanel.setBounds(0, 0, mainFrame.getWidth(), mainFrame.getHeight()-controlPanel.getHeight());
-         resultsPanel.setSize(mainFrame.getWidth(), mainFrame.getHeight()-controlPanel.getHeight());
+         // resultsPanel.setBounds(0, 0, mainFrame.getWidth(),
+         // mainFrame.getHeight()-controlPanel.getHeight());
+         resultsPanel.setSize(mainFrame.getWidth(), mainFrame.getHeight() - controlPanel.getHeight());
          resultsPanel.invalidate();
-         resultsPanel.repaint();         
+         resultsPanel.repaint();
       }
 
       @Override
